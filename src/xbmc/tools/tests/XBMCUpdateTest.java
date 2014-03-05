@@ -27,7 +27,7 @@ public class XBMCUpdateTest {
     public static void main(String[] args) {
         XBMCUpdate update = new XBMCUpdate();
         System.out.println(update.getURL());
-        update.sendUpdateRequest();
+        //update.sendUpdateRequest();
     }
 
 }
