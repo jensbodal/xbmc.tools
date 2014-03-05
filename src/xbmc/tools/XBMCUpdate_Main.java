@@ -24,12 +24,12 @@ public class XBMCUpdate_Main {
         else {
             StringBuilder invalidParams = new StringBuilder();
             invalidParams.append("Please run this program as follows: \n");
-            invalidParams.append("java -jar XBMC_Tools.jar ");
+            invalidParams.append("\tjava -jar XBMC_Tools.jar ");
             invalidParams.append("\"username\" ");
             invalidParams.append("\"password\" ");
             invalidParams.append("\"host\" ");
             invalidParams.append("\"port\"\n");
-            invalidParams.append("e.g. java -jar XBMC_Tools.jar ");
+            invalidParams.append("\te.g. java -jar XBMC_Tools.jar ");
             invalidParams.append("\"xbmc\" ");
             invalidParams.append("\"xbmc\" ");
             invalidParams.append("\"10.0.0.151\" ");
