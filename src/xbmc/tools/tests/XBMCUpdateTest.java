@@ -21,9 +21,8 @@ import xbmc.tools.XBMCUpdate;
 public class XBMCUpdateTest {
 
     /**
-
-* C:\cURL\curl.exe -i -H "Content-Type: application/json" -X POST -d 
-* "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.Scan\"}" http://xbmc:xbmc@10.0.0.151:8080/jsonrpc
+     *
+     * @param args no arguments used
      */
     public static void main(String[] args) {
         XBMCUpdate update = new XBMCUpdate();

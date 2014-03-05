@@ -3,8 +3,6 @@ package xbmc.tools;
 import java.io.IOException;
 import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -20,10 +18,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
  * @author Jens Bodal
  */
 public class XBMCUpdate {
-//C:\cURL\curl.exe -i 
-//-H "Content-Type: application/json" 
-//-X POST -d "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.Scan\"}" 
-    //http://xbmc:xbmc@10.0.0.151:8080/jsonrpc
     private String username = "xbmc";
     private String password = "xbmc";
     private String XBMC_Host = "10.0.0.151";
@@ -32,10 +26,21 @@ public class XBMCUpdate {
 
     //HttpClient httpclient = HttpClientBuilder.create().build();    
     
+    /**
+     * Passes default values to constructor
+     */
+        
     public XBMCUpdate() {
         setURL();
     }
     
+    /**
+     *
+     * @param username username in XBMC
+     * @param password password in XBMC
+     * @param host host IP address of machine running XBMC
+     * @param port port set in XBMC settings
+     */
     public XBMCUpdate(String username, String password, 
             String host, String port) {
         this.username = username;
@@ -45,6 +50,10 @@ public class XBMCUpdate {
         setURL();
     }
     
+    /**
+     * sends JSON update request to XBMC machine to update the video 
+     * library 
+     */
     public void sendUpdateRequest() {
         String updateString = 
                 "{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.Scan\"}" ;
@@ -55,14 +64,12 @@ public class XBMCUpdate {
         CloseableHttpClient client = HttpClientBuilder.create().build();
         try {
             HttpResponse response = client.execute(httpPost);
-            System.out.println(response.getStatusLine());
+            System.out.println(response.getStatusLine()); // move to log
             client.close();
 
         }
         catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
+            e.printStackTrace(); // move to log
         }
     }
     
@@ -71,6 +78,10 @@ public class XBMCUpdate {
 
     }
     
+    /**
+     * Returns the URL which will be posted to JSON
+     * @return URL which will be posted to JSON request
+     */
     public String getURL() {
         return this.URL;
     }
