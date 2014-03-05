@@ -65,10 +65,9 @@ public class XBMCUpdate {
         try (CloseableHttpClient client = HttpClientBuilder.create().build()){
             HttpResponse response = client.execute(httpPost);
             System.out.println(response.getStatusLine()); // move to log
-            
         }
         catch (IOException e) {
-            e.printStackTrace(); // move to log
+            e.printStackTrace(System.out); // move to log
         }
     }
     
