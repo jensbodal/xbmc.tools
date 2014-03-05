@@ -18,6 +18,7 @@ public class XBMCUpdate_Main {
             String host = args[2];
             String port = args[3];
             XBMCUpdate update = new XBMCUpdate(username, password, host, port);
+            System.out.println(update.getURL());
             update.sendUpdateRequest();
         }
     }
