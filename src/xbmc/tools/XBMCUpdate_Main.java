@@ -22,20 +22,19 @@ public class XBMCUpdate_Main {
             update.sendUpdateRequest();
         }
         else {
-            StringBuilder error = new StringBuilder();
-            error.append("Please run this program as follows: \n");
-            error.append("java -jar XBMC_Tools.jar ");
-            error.append("\"username\" ");
-            error.append("\"password\" ");
-            error.append("\"host\" ");
-            error.append("\"port\"\n");
-            error.append("e.g. ");
-            error.append("java -jar XBMC_Tools.jar ");
-            error.append("\"xbmc\" ");
-            error.append("\"xbmc\" ");
-            error.append("\"10.0.0.151\" ");
-            error.append("\"8080\" ");
-            System.out.println(error.toString());
+            StringBuilder invalidParams = new StringBuilder();
+            invalidParams.append("Please run this program as follows: \n");
+            invalidParams.append("java -jar XBMC_Tools.jar ");
+            invalidParams.append("\"username\" ");
+            invalidParams.append("\"password\" ");
+            invalidParams.append("\"host\" ");
+            invalidParams.append("\"port\"\n");
+            invalidParams.append("e.g. java -jar XBMC_Tools.jar ");
+            invalidParams.append("\"xbmc\" ");
+            invalidParams.append("\"xbmc\" ");
+            invalidParams.append("\"10.0.0.151\" ");
+            invalidParams.append("\"8080\" ");
+            System.out.println(invalidParams.toString());
         }
     }
 }
