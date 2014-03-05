@@ -61,17 +61,17 @@ public class XBMCUpdate {
         HttpPost httpPost = new HttpPost(getURL());
         entity.setContentType("application/json");
         httpPost.setEntity(entity);
-        CloseableHttpClient client = HttpClientBuilder.create().build();
-        try {
+        
+        try (CloseableHttpClient client = HttpClientBuilder.create().build()){
             HttpResponse response = client.execute(httpPost);
             System.out.println(response.getStatusLine()); // move to log
-            client.close();
-
+            
         }
         catch (IOException e) {
             e.printStackTrace(); // move to log
         }
     }
+    
     
     private void setURL() {
         this.URL = buildURL(username, password, XBMC_Host, port);
