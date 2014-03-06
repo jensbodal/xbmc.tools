@@ -1,9 +1,12 @@
 package xbmc.tools;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -23,7 +26,8 @@ public class XBMCUpdate {
     private String XBMC_Host = "10.0.0.151";
     private String port = "8080";
     private String URL; 
-
+    private int timeoutConnection = 100;
+    
     //HttpClient httpclient = HttpClientBuilder.create().build();    
     
     /**
@@ -43,11 +47,27 @@ public class XBMCUpdate {
      */
     public XBMCUpdate(String username, String password, 
             String host, String port) {
-        this.username = username;
-        this.password = password;
-        this.XBMC_Host = host;
-        this.port = port;
+        setUsername(username);
+        setPassword(password);
+        setHost(host);
+        setPort(port);
         setURL();
+    }
+    
+    private void setUsername(String username) {
+        this.username = username;
+    }
+    
+    private void setPassword(String password) {
+        this.password = password;
+    }
+    
+    private void setHost(String host) {
+        this.XBMC_Host = host;
+    }
+    
+    private void setPort(String port) {
+        this.port = port;
     }
     
     /**
@@ -61,13 +81,20 @@ public class XBMCUpdate {
         HttpPost httpPost = new HttpPost(getURL());
         entity.setContentType("application/json");
         httpPost.setEntity(entity);
+        RequestConfig.Builder requestBuilder = RequestConfig.custom();
+        requestBuilder = requestBuilder.setConnectTimeout(timeoutConnection);
+        requestBuilder = requestBuilder
+                .setConnectionRequestTimeout(timeoutConnection);
+        HttpClientBuilder builder = HttpClientBuilder.create();
+        builder.setDefaultRequestConfig(requestBuilder.build());
         
-        try (CloseableHttpClient client = HttpClientBuilder.create().build()){
+        try (CloseableHttpClient client = builder.build()) {            
             HttpResponse response = client.execute(httpPost);
             System.out.println(response.getStatusLine()); // move to log
         }
+ 
         catch (IOException e) {
-            e.printStackTrace(System.out); // move to log
+            System.out.println("ERROR: " + e.getLocalizedMessage());
         }
     }
     
