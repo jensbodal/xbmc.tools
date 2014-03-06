@@ -44,10 +44,10 @@ public class XBMCUpdate_Main {
                 }
             } // End -update
             if (args[0].equals("-utor")) {
-//                XBMCUpdate updateXios = new XBMCUpdate("xbmc", "xbmc", "10.0.0.151", "8080");
-//                XBMCUpdate updateJens = new XBMCUpdate("xbmc", "xbmc", "127.0.0.1", "8082");
-//                updateXios.sendUpdateRequest();
-//                updateJens.sendUpdateRequest();
+                XBMCUpdate updateXios = new XBMCUpdate("xbmc", "xbmc", "10.0.0.151", "8080");
+                XBMCUpdate updateJens = new XBMCUpdate("xbmc", "xbmc", "127.0.0.1", "8082");
+                updateXios.sendUpdateRequest();
+                updateJens.sendUpdateRequest();
                 String label = args[2];
                 String title = args[3];
                 DownloadLog log = new DownloadLog(label, title);
