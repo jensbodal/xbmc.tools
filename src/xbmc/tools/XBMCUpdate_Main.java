@@ -48,10 +48,10 @@ public class XBMCUpdate_Main {
                 XBMCUpdate updateJens = new XBMCUpdate("xbmc", "xbmc", "10.0.0.220", "8082");
                 updateXios.sendUpdateRequest();
                 updateJens.sendUpdateRequest();
-                String label = args[1];
-                String title = args[2];
+                String label = args[2];
+                String title = args[3];
                 DownloadLog log = new DownloadLog(label, title);
-                File logFile = new File("/Users/akevit/Downloads/uTorrentLog.txt");
+                File logFile = new File(args[1]);
                 if (logFile.exists()) {
                     try (FileWriter writer = new FileWriter(logFile, true)) {
                         writer.write(log.toString());
