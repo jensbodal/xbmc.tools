@@ -39,7 +39,7 @@ public class DownloadLog {
     }
     
     public String getDate() {
-        DateFormat dateFormat = new SimpleDateFormat("E mm/dd/yyyy HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("E MM/dd/yyyy HH:mm:ss");
         Date date = new Date();
         return dateFormat.format(date);
     }
