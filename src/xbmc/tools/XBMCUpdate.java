@@ -1,12 +1,10 @@
 package xbmc.tools;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -26,7 +24,7 @@ public class XBMCUpdate {
     private String XBMC_Host = "10.0.0.151";
     private String port = "8080";
     private String URL; 
-    private int timeoutConnection = 100;
+    private final int timeoutConnection = 3000;
     
     //HttpClient httpclient = HttpClientBuilder.create().build();    
     
