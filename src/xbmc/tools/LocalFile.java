@@ -23,6 +23,13 @@ import java.io.IOException;
 
 public class LocalFile {
     
+    /**
+     * This is a temporary method which will parse the first line in a text file assuming
+     * the text file only has one line.  This will be used until I figure out how to properly
+     * secure password storage.
+     * @param txtfile text file containing single line to return
+     * @return first line of text file
+     */
     public static String getString(String txtfile) {
         String returnString = null;
         String userHome = System.getProperty("user.home");
