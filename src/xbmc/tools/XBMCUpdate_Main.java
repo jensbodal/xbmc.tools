@@ -3,6 +3,10 @@
  */
 package xbmc.tools;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  *
  * @author Jens Bodal
@@ -20,7 +24,8 @@ public class XBMCUpdate_Main {
                     XBMCUpdate update = new XBMCUpdate(username, password, host, port);
                     System.out.printf("Updating: %s %n", update.getURL());
                     update.sendUpdateRequest();
-                } else {
+                }
+                else {
                     StringBuilder invalidParams = new StringBuilder();
                     invalidParams.append("Please run this program as follows: \n");
                     invalidParams.append("\tjava -jar XBMC_Tools.jar ");
@@ -38,7 +43,33 @@ public class XBMCUpdate_Main {
                     System.out.println(invalidParams.toString());
                 }
             }
-        }
+            if (args[0].equals("-utor")) {
+                XBMCUpdate updateXios = new XBMCUpdate("xbmc", "xbmc", "10.0.0.151", "8080");
+                XBMCUpdate updateJens = new XBMCUpdate("xbmc", "xbmc", "10.0.0.220", "8082");
+                updateXios.sendUpdateRequest();
+                updateJens.sendUpdateRequest();
+                String label = args[1];
+                String title = args[2];
+                DownloadLog log = new DownloadLog(label, title);
+                File logFile = new File("/Users/akevit/Downloads/uTorrentLog.txt");
+                if (logFile.exists()) {
+                    try (FileWriter writer = new FileWriter(logFile, true)) {
+                        writer.write(log.toString());
+                        writer.write("\n");
+                        System.out.println("Added to log: \n\t" + log.toString());
+                        
+                    }
+                    catch (IOException e) {
+                        System.out.println(e);
+                    }
+                }
+                else {
+                    System.out.printf("Directory %s does not exist", logFile.getAbsolutePath());
+                }
 
+                
+
+            }
+        }
     }
 }
