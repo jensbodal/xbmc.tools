@@ -23,12 +23,18 @@ public class GmailTest {
         Emailer emailer = new Emailer();
         String username = LocalFile.getString("/gmailusername.txt");
         String password = LocalFile.getString("/gmailpassword.txt");
+        String USETLS = "true";
+        String SMTP_SERVER = "smtp.gmail.com";
+        String PORT = "587";
+        boolean TEST_ALL_SMTP_SERVERS = false;
+        
         emailer.setCredentials(username, password);
         emailer.setFromAddress(username + "@gmail.com");
         emailer.setToAddress("example@mailinator.com");
         emailer.setMessageSubject("You sent an email!");
         emailer.setMessageContext("This is the body of the email");
-        emailer.sendEmail("true", "smtp.gmail.com", "587" , false);
+        
+        emailer.sendEmail(USETLS, SMTP_SERVER, PORT, TEST_ALL_SMTP_SERVERS);
     }
     
 }
