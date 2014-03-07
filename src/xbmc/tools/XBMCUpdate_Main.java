@@ -80,6 +80,8 @@ public class XBMCUpdate_Main {
                 }
             } // End -utor
         } // End arg length check
-        System.out.println(args.length);
+        else {
+            System.out.println("Invalid number of arguments: " + args.length);
+        }
       }// End Main class
 }
