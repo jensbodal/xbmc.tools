@@ -14,6 +14,11 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ *
+ * @author jensb
+ * @deprecated
+ */
 @Deprecated
 public class SendMailGmail {
 
@@ -22,6 +27,11 @@ public class SendMailGmail {
     private String toAddress;
     private String torrentLog;
 
+    /**
+     *
+     * @param toAddress
+     * @param torrentLog
+     */
     public SendMailGmail(String toAddress, String torrentLog) {
         setToAddress(toAddress);
         setTorrentLog(torrentLog);
@@ -29,6 +39,9 @@ public class SendMailGmail {
         setUsername(LocalFile.getString("/gmailusername.txt"));
     }
 
+    /**
+     *
+     */
     public void sendEmail() {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");

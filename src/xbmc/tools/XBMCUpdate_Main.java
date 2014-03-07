@@ -13,6 +13,10 @@ import java.io.IOException;
  */
 public class XBMCUpdate_Main {
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         if (args.length > 0) {
             if (args[0].equals("-update")) {

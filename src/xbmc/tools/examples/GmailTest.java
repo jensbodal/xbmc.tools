@@ -19,6 +19,10 @@ import xbmc.tools.LocalFile;
  */
 public class GmailTest {
     
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         Emailer emailer = new Emailer();
         String username = LocalFile.getString("/gmailusername.txt");
