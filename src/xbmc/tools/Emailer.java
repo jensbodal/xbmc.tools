@@ -45,8 +45,8 @@ public class Emailer {
     }
     
     public void setCredentials(String username, String password) {
-        setPassword(username);
-        setUsername(password);
+        setUsername(username);
+        setPassword(password);
         this.authenticationEnabled = true;
     }
 
