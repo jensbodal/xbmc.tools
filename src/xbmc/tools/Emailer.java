@@ -43,10 +43,15 @@ public class Emailer {
         setUsername(LocalFile.getString("/gmailusername.txt"));
         this.authenticationEnabled = true;
     }
+    
+    public void setCredentials(String username, String password) {
+        setPassword(username);
+        setUsername(password);
+        this.authenticationEnabled = true;
+    }
 
     public Authenticator enableAuthentication() {
         return new Authenticator() {
-            
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(getUsername(), getPassword());
@@ -61,7 +66,6 @@ public class Emailer {
 
     public Authenticator disableAuthentication() {
         return new Authenticator() {
-
         };
     }
 
@@ -88,8 +92,6 @@ public class Emailer {
 
         for (String host : hosts) {
             Properties props = new Properties();
-            
-            
             props.put("mail.smtp.starttls.enable", tls);
             props.put("mail.smtp.host", host);
             props.put("mail.smtp.port", port);
@@ -105,7 +107,6 @@ public class Emailer {
             Session session = Session.getInstance(props, authenticator);
 
             try {
-
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(getFromAddress()));
                 message.setRecipients(Message.RecipientType.TO,
@@ -167,7 +168,6 @@ public class Emailer {
                   pvhn[i][1].substring(0, pvhn[i][1].length() - 1) : pvhn[i][1];
             }
         }
-
         return sortedHostNames;
     }
 

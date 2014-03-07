@@ -63,7 +63,6 @@ public class XBMCUpdate_Main {
                 emailer.setMessageContext(log.toString());
                 emailer.setCredentials();
                 emailer.sendEmail("true", "smtp.gmail.com", "587", false);
- 
 
                 File logFile = new File(args[1]);
                 if (logFile.exists()) {
@@ -71,7 +70,6 @@ public class XBMCUpdate_Main {
                         writer.write(log.toString());
                         writer.write("\n");
                         System.out.println("Added to log: \n\t" + log.toString());
-                        
                     }
                     catch (IOException e) {
                         System.out.println(e);
@@ -80,9 +78,6 @@ public class XBMCUpdate_Main {
                 else {
                     System.out.printf("Directory %s does not exist", logFile.getAbsolutePath());
                 }
-
-                
-
             } // End -utor
         } // End arg length check
         System.out.println(args.length);
