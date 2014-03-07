@@ -46,9 +46,15 @@ public class Emailer {
 
     public Authenticator enableAuthentication() {
         return new Authenticator() {
+            
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
+                return new PasswordAuthentication(getUsername(), getPassword());
+            }
+            
+            @Override
+            public String toString() {
+                return "Custom authenticator with user/pass";
             }
         };
     }
@@ -71,6 +77,7 @@ public class Emailer {
         setSmtpHost(smtpHost);
         setPort(port);
         String[] hosts;
+        
         if (tryAll) {
             String[] generate_SMTP_list = determineSMTP(getToAddress());
             hosts = generate_SMTP_list;
@@ -81,16 +88,19 @@ public class Emailer {
 
         for (String host : hosts) {
             Properties props = new Properties();
-            props.put("mail.smtp.auth", "\"" + authenticationEnabled + "\"");
+            
+            
             props.put("mail.smtp.starttls.enable", tls);
             props.put("mail.smtp.host", host);
             props.put("mail.smtp.port", port);
             Authenticator authenticator;
             if (authenticationEnabled) {
                 authenticator = enableAuthentication();
+                props.put("mail.smtp.auth","true");
             }
             else {
                 authenticator = disableAuthentication();
+                props.put("mail.smtp.auth","false");
             }
             Session session = Session.getInstance(props, authenticator);
 
@@ -110,6 +120,7 @@ public class Emailer {
                 System.out.print("Please try another SMTP address: ");
                 System.out.println(this.getSmtpHost());
                 System.out.println(e);
+                e.printStackTrace();
             }
         }
     }
@@ -174,9 +185,17 @@ public class Emailer {
     private void setPassword(String password) {
         this.password = password;
     }
+    
+    private String getPassword() {
+        return this.password;
+    }
 
     private void setUsername(String username) {
         this.username = username;
+    }
+    
+    private String getUsername() {
+        return this.username;
     }
 
     public void setToAddress(String toAddress) {

@@ -17,5 +17,6 @@ public class UnecryptedEmailTest {
         emailer.setMessageSubject("Amazing opportunity!!!!");
         emailer.setMessageContext("Do you want money?");
         emailer.sendEmail("true", "25", false);
+
     }
 }

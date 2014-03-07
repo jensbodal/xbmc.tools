@@ -61,8 +61,10 @@ public class XBMCUpdate_Main {
                 emailer.setFromAddress(fromEmail);
                 emailer.setMessageSubject("New Torrent Downloaded");
                 emailer.setMessageContext(log.toString());
-                emailer.sendEmail("true", "25", false);
+                emailer.setCredentials();
+                emailer.sendEmail("true", "smtp.gmail.com", "587", false);
  
+
                 File logFile = new File(args[1]);
                 if (logFile.exists()) {
                     try (FileWriter writer = new FileWriter(logFile, true)) {
@@ -83,5 +85,6 @@ public class XBMCUpdate_Main {
 
             } // End -utor
         } // End arg length check
+        System.out.println(args.length);
       }// End Main class
 }
