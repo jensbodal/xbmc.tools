@@ -44,16 +44,25 @@ public class XBMCUpdate_Main {
                 }
             } // End -update
             if (args[0].equals("-utor")) {
-                XBMCUpdate updateXios = new XBMCUpdate("xbmc", "xbmc", "10.0.0.151", "8080");
-                XBMCUpdate updateJens = new XBMCUpdate("xbmc", "xbmc", "127.0.0.1", "8082");
+                XBMCUpdate updateXios = 
+                        new XBMCUpdate("xbmc", "xbmc", "10.0.0.151", "8080");
+                XBMCUpdate updateJens = 
+                        new XBMCUpdate("xbmc", "xbmc", "127.0.0.1", "8082");
                 updateXios.sendUpdateRequest();
                 updateJens.sendUpdateRequest();
                 String label = args[2];
                 String title = args[3];
                 DownloadLog log = new DownloadLog(label, title);
                 String sendTo = (LocalFile.getString("/sendto.txt"));
-                SendMailGmail sendTest = new SendMailGmail(sendTo, log.toString());
-                sendTest.sendEmail();
+                Emailer emailer = new Emailer();
+                String toEmail = sendTo;
+                String fromEmail = "utorrent@gmail.com";
+                emailer.setToAddress(toEmail);
+                emailer.setFromAddress(fromEmail);
+                emailer.setMessageSubject("New Torrent Downloaded");
+                emailer.setMessageContext(log.toString());
+                emailer.sendEmail("true", "25", false);
+ 
                 File logFile = new File(args[1]);
                 if (logFile.exists()) {
                     try (FileWriter writer = new FileWriter(logFile, true)) {
