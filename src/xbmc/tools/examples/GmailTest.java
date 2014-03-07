@@ -1,4 +1,4 @@
-package xbmc.tools.tests;
+package xbmc.tools.examples;
 
 import xbmc.tools.Emailer;
 import xbmc.tools.LocalFile;

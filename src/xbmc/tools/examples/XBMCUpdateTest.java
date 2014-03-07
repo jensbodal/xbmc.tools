@@ -2,7 +2,7 @@
  * XBMCUpdateTest.java
  */ 
 
-package xbmc.tools.tests;
+package xbmc.tools.examples;
 
 import xbmc.tools.XBMCUpdate;
 
