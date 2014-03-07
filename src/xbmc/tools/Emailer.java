@@ -32,7 +32,6 @@ public class Emailer {
     private String tls;
     private String port;
     private boolean authenticationEnabled = false;
-    private boolean setFromAddress = false;
 
     public Emailer() {
 
@@ -43,7 +42,7 @@ public class Emailer {
         setUsername(LocalFile.getString("/gmailusername.txt"));
         this.authenticationEnabled = true;
     }
-    
+
     public void setCredentials(String username, String password) {
         setUsername(username);
         setPassword(password);
@@ -56,7 +55,7 @@ public class Emailer {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(getUsername(), getPassword());
             }
-            
+
             @Override
             public String toString() {
                 return "Custom authenticator with user/pass";
@@ -81,7 +80,7 @@ public class Emailer {
         setSmtpHost(smtpHost);
         setPort(port);
         String[] hosts;
-        
+
         if (tryAll) {
             String[] generate_SMTP_list = determineSMTP(getToAddress());
             hosts = generate_SMTP_list;
@@ -98,11 +97,11 @@ public class Emailer {
             Authenticator authenticator;
             if (authenticationEnabled) {
                 authenticator = enableAuthentication();
-                props.put("mail.smtp.auth","true");
+                props.put("mail.smtp.auth", "true");
             }
             else {
                 authenticator = disableAuthentication();
-                props.put("mail.smtp.auth","false");
+                props.put("mail.smtp.auth", "false");
             }
             Session session = Session.getInstance(props, authenticator);
 
@@ -164,8 +163,8 @@ public class Emailer {
         if (pvhn != null) {
             sortedHostNames = new String[pvhn.length];
             for (int i = 0; i < pvhn.length; i++) {
-                sortedHostNames[i] = pvhn[i][1].endsWith(".") ? 
-                  pvhn[i][1].substring(0, pvhn[i][1].length() - 1) : pvhn[i][1];
+                sortedHostNames[i] = pvhn[i][1].endsWith(".")
+                        ? pvhn[i][1].substring(0, pvhn[i][1].length() - 1) : pvhn[i][1];
             }
         }
         return sortedHostNames;
@@ -185,7 +184,7 @@ public class Emailer {
     private void setPassword(String password) {
         this.password = password;
     }
-    
+
     private String getPassword() {
         return this.password;
     }
@@ -193,7 +192,7 @@ public class Emailer {
     private void setUsername(String username) {
         this.username = username;
     }
-    
+
     private String getUsername() {
         return this.username;
     }
@@ -223,20 +222,11 @@ public class Emailer {
     }
 
     public void setFromAddress(String fromAddress) {
-        setFromAddress = true;
-        if (!authenticationEnabled) {
-            this.fromAddress = fromAddress;
-        }
-
+        this.fromAddress = fromAddress;
     }
 
     private String getFromAddress() {
-        if (!setFromAddress) {
-            return toAddress;
-        }
-        else {
-            return this.fromAddress;
-        }
+        return this.fromAddress;
     }
 
     private void setSmtpHost(String smtpHost) {
