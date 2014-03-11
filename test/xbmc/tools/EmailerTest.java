@@ -6,18 +6,19 @@
 
 package xbmc.tools;
 
-import javax.mail.Authenticator;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author jensb
  */
+@Ignore
 public class EmailerTest {
     String toEmail = "java@mailinator.com";
     String fromEmail = "billgates@live.com";

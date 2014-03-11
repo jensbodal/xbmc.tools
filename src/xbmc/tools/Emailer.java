@@ -1,7 +1,6 @@
 package xbmc.tools;
 
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Properties;
@@ -25,7 +24,6 @@ import org.apache.commons.net.telnet.TelnetClient;
  */
 public class Emailer {
 
-    private final String testDomain = "portquiz.net";
     
     private String password;
     private String username;
@@ -357,10 +355,6 @@ public class Emailer {
 
     public boolean testPort(String domain, int port) {
         TelnetClient client = new TelnetClient();
-        if (this.getToAddress() != null) {
-            domain = parseDomain(this.getToAddress());
-        }
-
         try {
             client.connect(domain, port);
             return true;
@@ -372,14 +366,7 @@ public class Emailer {
 
     }
     
-    public boolean testPort(int port) {
-        return testPort(this.testDomain, port);
-    }
-
-    public boolean testPort(String port) {
-        return testPort(this.testDomain, Integer.parseInt(port));
-    }
-
+ 
     private enum STATUS {
 
         SUCCESS("SUCCESS", true),
