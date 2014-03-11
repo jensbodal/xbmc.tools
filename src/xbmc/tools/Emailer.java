@@ -353,8 +353,16 @@ public class Emailer {
         return status.getStatus();
     }
 
-    public boolean testPort(String domain, int port) {
+    /**
+     * 
+     * @param domain domain to test port on
+     * @param port port to test
+     * @param timeout time in milliseconds before timeout
+     * @return true if port is open
+     */
+    public boolean testPort(String domain, int port, int timeout) {
         TelnetClient client = new TelnetClient();
+        client.setConnectTimeout(timeout);
         try {
             client.connect(domain, port);
             return true;
@@ -364,6 +372,17 @@ public class Emailer {
             return false;
         }
 
+    }
+    
+    /**
+     * if no timeoutspecified then this overloaded method will default to 3
+     * seconds
+     * @param domain domain to test port on
+     * @param port port to test
+     * @return true if port is open
+     */
+    public boolean testPort(String domain, int port) {
+        return testPort(domain, port, 3000);
     }
     
  

@@ -17,12 +17,7 @@ public class PortsTest {
     public void testPort25() {
         boolean expectedResult = true;
         boolean result = false;
-        long waitTime = System.currentTimeMillis() + 1000;
-        while (System.currentTimeMillis() < waitTime) {
-            result = emailer.testPort(testDomain, 25);
-        }
-        System.out.println(waitTime);
-        System.out.println(System.currentTimeMillis());
+        result = emailer.testPort(testDomain, 25, 1500);
         assertEquals("Your ISP is likely blocking sending mail on outgoing "
                 + "port 25", expectedResult, result);
     }
