@@ -11,7 +11,7 @@ import org.junit.Test;
 public class PortsTest {
     Emailer emailer = new Emailer();
     
-    @Test
+    @Test(timeout=1000)
     public void testPort25() {
         boolean expectedResult = true;
         boolean result = emailer.testPort(25);
@@ -19,28 +19,28 @@ public class PortsTest {
                     + "port 25", expectedResult, result);
     }
     
-    @Test
+    @Test(timeout=1000)
     public void testPort587() {
         boolean expectedResult = true;
         boolean result = emailer.testPort(587);
         assertEquals(expectedResult, result);
     }
     
-    @Test
+    @Test(timeout=1000)
     public void testPort81() {
         boolean expectedResult = true;
         boolean result = emailer.testPort(81);
         assertEquals(expectedResult, result);
     }
     
-    @Test
+    @Test(timeout=1000)
     public void gmailSMTP() {
         boolean expectedResult = true;
         boolean result = emailer.testPort("smtp.gmail.com", 587);
         assertEquals(expectedResult, result);
     }
     
-    @Test
+    @Test(timeout=1000)
     public void gmail25() {
         boolean expectedResult = true;
         boolean result = emailer.testPort("smtp.gmail.com", 25);
