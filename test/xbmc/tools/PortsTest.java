@@ -16,8 +16,7 @@ public class PortsTest {
     @Test
     public void testPort25() {
         boolean expectedResult = true;
-        boolean result = false;
-        result = emailer.testPort(testDomain, 25, 1500);
+        boolean result = emailer.testPort(testDomain, 25, 1500);
         assertEquals("Your ISP is likely blocking sending mail on outgoing "
                 + "port 25", expectedResult, result);
     }
