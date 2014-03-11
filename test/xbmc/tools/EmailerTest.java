@@ -66,5 +66,22 @@ public class EmailerTest {
         String result = emailer.getStatus();
         assertEquals(expectedResult, result);
     }
+    
+    @Test
+    public void testToAddress() {
+        emailer.setToAddress("bill@mailinator.com");
+        String result = emailer.getToAddress();
+        assertNotNull(result);
+        String resultFail = null;
+        try {
+            emailer.setToAddress("dave2gmail.com");
+        }
+        catch (IllegalArgumentException e) {
+            resultFail = emailer.getToAddress();
+        }
+        assertNull(resultFail);
+    }
+    
+
 
 }

@@ -1,5 +1,7 @@
 package xbmc.tools;
 
+import java.io.IOException;
+import java.net.SocketException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Properties;
@@ -15,6 +17,7 @@ import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.InitialDirContext;
+import org.apache.commons.net.telnet.TelnetClient;
 
 /**
  *
@@ -22,6 +25,8 @@ import javax.naming.directory.InitialDirContext;
  */
 public class Emailer {
 
+    private final String testDomain = "portquiz.net";
+    
     private String password;
     private String username;
     private String toAddress;
@@ -32,7 +37,7 @@ public class Emailer {
     private String tls;
     private String port;
     private boolean authenticationEnabled = false;
-    private STATUS status;
+    private STATUS status = STATUS.FAIL;
 
     /**
      * Creates an Emailer object, there are no arguments to pass
@@ -42,8 +47,8 @@ public class Emailer {
     }
 
     /**
-     * Grabs the username and password from text files stored in the user's
-     * home directory
+     * Grabs the username and password from text files stored in the user's home
+     * directory
      */
     public void setCredentials() {
         setPassword(LocalFile.getString("/gmailpassword.txt"));
@@ -81,8 +86,9 @@ public class Emailer {
     }
 
     /**
-     * <b>NOTE</b> this will likely not work if you don't have a business
-     * class ISP.  Most ISPs disable sending unauthenticated email on port 25
+     * <b>NOTE</b> this will likely not work if you don't have a business class
+     * ISP. Most ISPs disable sending unauthenticated email on port 25
+     *
      * @return authenticator object if no authenticaion desired
      */
     public Authenticator disableAuthentication() {
@@ -91,12 +97,13 @@ public class Emailer {
     }
 
     /**
-     * These need to be passed as implicit strings as passing booleans did 
-     * not work
+     * These need to be passed as implicit strings as passing booleans did not
+     * work
+     *
      * @param tls expects either "true" or "false" whether to use TLS
      * @param port the port to use (e.g. "587")
-     * @param tryAll boolean value which specifies that you want to iterate 
-     * through all MX servers until one works or they all fail.  Most would be
+     * @param tryAll boolean value which specifies that you want to iterate
+     * through all MX servers until one works or they all fail. Most would be
      * satisfied with setting to false
      */
     public void sendEmail(
@@ -106,13 +113,14 @@ public class Emailer {
     }
 
     /**
-     * These need to be passed as implicit strings as passing booleans did 
-     * not work
+     * These need to be passed as implicit strings as passing booleans did not
+     * work
+     *
      * @param tls expects either "true" or "false" whether to use TLS
      * @param smtpHost e.g. "smtp.google.com"
      * @param port the port to use (e.g. "587")
-     * @param tryAll boolean value which specifies that you want to iterate 
-     * through all MX servers until one works or they all fail.  Most would be
+     * @param tryAll boolean value which specifies that you want to iterate
+     * through all MX servers until one works or they all fail. Most would be
      * satisfied with setting to false
      * @throws javax.mail.MessagingException
      */
@@ -164,14 +172,15 @@ public class Emailer {
                 System.out.print("Please try another SMTP address: ");
                 System.out.println(this.getSmtpHost());
                 System.out.println(e);
-                
             }
         }
+
     }
 
     /**
-     * This will take an email address then parse the domain to search for
-     * SMTP servers
+     * This will take an email address then parse the domain to search for SMTP
+     * servers
+     *
      * @param emailAddress email address to search for smtp servers on
      * @return an array of SMTP servers for the domain
      */
@@ -252,10 +261,17 @@ public class Emailer {
      * @param toAddress email address to send an email to
      */
     public void setToAddress(String toAddress) {
-        this.toAddress = toAddress;
+        if (toAddress.length() > 0 && toAddress.contains("@")) {
+            this.toAddress = toAddress;
+        }
+        else {
+            this.toAddress = null;
+            throw new IllegalArgumentException(
+                    "Please check email address format");
+        }
     }
 
-    private String getToAddress() {
+    public String getToAddress() {
         return this.toAddress;
     }
 
@@ -334,22 +350,55 @@ public class Emailer {
     public String getPort() {
         return this.port;
     }
-    
+
     public String getStatus() {
         return status.getStatus();
     }
-    
-    private enum STATUS {
-        SUCCESS ("SUCCESS"),
-        FAIL ("FAIL");
-        
-        String status;
-        
-        STATUS(String status) {
-            this.status = status;
+
+    public boolean testPort(String domain, int port) {
+        TelnetClient client = new TelnetClient();
+        if (this.getToAddress() != null) {
+            domain = parseDomain(this.getToAddress());
         }
+
+        try {
+            client.connect(domain, port);
+            return true;
+        }
+        
+        catch (IOException e) {
+            return false;
+        }
+
+    }
+    
+    public boolean testPort(int port) {
+        return testPort(this.testDomain, port);
+    }
+
+    public boolean testPort(String port) {
+        return testPort(this.testDomain, Integer.parseInt(port));
+    }
+
+    private enum STATUS {
+
+        SUCCESS("SUCCESS", true),
+        FAIL("FAIL", false);
+
+        private String status;
+        private boolean sent;
+
+        private STATUS(String status, boolean sent) {
+            this.status = status;
+            this.sent = sent;
+        }
+
         public String getStatus() {
             return status;
+        }
+
+        public boolean Sent() {
+            return sent;
         }
     }
 
