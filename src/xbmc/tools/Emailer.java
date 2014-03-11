@@ -32,6 +32,7 @@ public class Emailer {
     private String tls;
     private String port;
     private boolean authenticationEnabled = false;
+    private STATUS status;
 
     /**
      * Creates an Emailer object, there are no arguments to pass
@@ -113,6 +114,7 @@ public class Emailer {
      * @param tryAll boolean value which specifies that you want to iterate 
      * through all MX servers until one works or they all fail.  Most would be
      * satisfied with setting to false
+     * @throws javax.mail.MessagingException
      */
     public void sendEmail(
             String tls, String smtpHost, String port, boolean tryAll) {
@@ -154,13 +156,15 @@ public class Emailer {
                 message.setText(getMessageContext());
                 Transport.send(message);
                 System.out.println("Sent");
+                status = STATUS.SUCCESS;
                 break;
             }
             catch (MessagingException e) {
+                status = STATUS.FAIL;
                 System.out.print("Please try another SMTP address: ");
                 System.out.println(this.getSmtpHost());
                 System.out.println(e);
-                e.printStackTrace();
+                
             }
         }
     }
@@ -329,6 +333,24 @@ public class Emailer {
      */
     public String getPort() {
         return this.port;
+    }
+    
+    public String getStatus() {
+        return status.getStatus();
+    }
+    
+    private enum STATUS {
+        SUCCESS ("SUCCESS"),
+        FAIL ("FAIL");
+        
+        String status;
+        
+        STATUS(String status) {
+            this.status = status;
+        }
+        public String getStatus() {
+            return status;
+        }
     }
 
 }
