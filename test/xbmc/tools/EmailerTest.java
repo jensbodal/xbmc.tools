@@ -43,7 +43,7 @@ public class EmailerTest {
         emailer.setToAddress(toEmail);
         emailer.setFromAddress(fromEmail);
         emailer.setMessageSubject(messageSubject);
-        emailer.setMessageContext(messageBody);
+        emailer.setMessageBody(messageBody);
     }
     
     @After

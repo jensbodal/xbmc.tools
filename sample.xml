@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <item date="January 2009">
+    <mode>Simple date query mode is here and here and here</mode>
+    <unit>900</unit>
+    <current>1</current>
+    <interactive>1</interactive>
+  </item>
+</config> 

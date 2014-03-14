@@ -57,14 +57,13 @@ public class XBMCUpdate_Main {
                 String label = args[2];
                 String title = args[3];
                 DownloadLog log = new DownloadLog(label, title);
-                String sendTo = (LocalFile.getString("/sendto.txt"));
+                String toEmail = (LocalFile.getString("/sendto.txt"));
                 Emailer emailer = new Emailer();
-                String toEmail = sendTo;
                 String fromEmail = "utorrent@gmail.com";
                 emailer.setToAddress(toEmail);
                 emailer.setFromAddress(fromEmail);
                 emailer.setMessageSubject("New Torrent Downloaded");
-                emailer.setMessageContext(log.toString());
+                emailer.setMessageBody(log.toString());
                 emailer.setCredentials();
                 emailer.sendEmail("true", "smtp.gmail.com", "587", false);
 

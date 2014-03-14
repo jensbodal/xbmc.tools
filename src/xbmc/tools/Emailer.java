@@ -22,7 +22,7 @@ import org.apache.commons.net.telnet.TelnetClient;
  *
  * @author jensb
  */
-public class Emailer {
+public class Emailer extends Email implements Emailable {
 
     
     private String password;
@@ -30,12 +30,13 @@ public class Emailer {
     private String toAddress;
     private String fromAddress;
     private String messageSubject;
-    private String messageContext;
+    private String messageBody;
     private String smtpHost;
     private String tls;
     private String port;
     private boolean authenticationEnabled = false;
     private STATUS status = STATUS.FAIL;
+    private EMAIL email;
 
     /**
      * Creates an Emailer object, there are no arguments to pass
@@ -120,7 +121,6 @@ public class Emailer {
      * @param tryAll boolean value which specifies that you want to iterate
      * through all MX servers until one works or they all fail. Most would be
      * satisfied with setting to false
-     * @throws javax.mail.MessagingException
      */
     public void sendEmail(
             String tls, String smtpHost, String port, boolean tryAll) {
@@ -159,7 +159,7 @@ public class Emailer {
                 message.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(getToAddress()));
                 message.setSubject(getMessageSubject());
-                message.setText(getMessageContext());
+                message.setText(getMessageBody());
                 Transport.send(message);
                 System.out.println("Sent");
                 status = STATUS.SUCCESS;
@@ -237,6 +237,10 @@ public class Emailer {
         }
         return emailAddress.substring(atLocation + 1, emailAddress.length());
     }
+    
+    private String parseUsername(String emailAddress) {
+        return emailAddress.replaceAll("@"+parseDomain(emailAddress),"").trim();        
+    }
 
     private void setPassword(String password) {
         this.password = password;
@@ -258,6 +262,7 @@ public class Emailer {
      *
      * @param toAddress email address to send an email to
      */
+    @Override
     public void setToAddress(String toAddress) {
         if (toAddress.length() > 0 && toAddress.contains("@")) {
             this.toAddress = toAddress;
@@ -277,6 +282,7 @@ public class Emailer {
      *
      * @param messageSubject message subject for email
      */
+    @Override
     public void setMessageSubject(String messageSubject) {
         this.messageSubject = messageSubject;
     }
@@ -291,22 +297,25 @@ public class Emailer {
 
     /**
      *
-     * @param messageContext the message body for the email to send
+     * @param messageBody the message body for the email to send
      */
-    public void setMessageContext(String messageContext) {
-        this.messageContext = messageContext;
+    @Override
+    public void setMessageBody(String messageBody) {
+        this.messageBody = messageBody;
     }
 
-    private String getMessageContext() {
-        return this.messageContext;
+    private String getMessageBody() {
+        return this.messageBody;
     }
 
     /**
      *
      * @param fromAddress the address you want to show in the from field
      */
+    @Override
     public void setFromAddress(String fromAddress) {
         this.fromAddress = fromAddress;
+        
     }
 
     private String getFromAddress() {
@@ -391,8 +400,8 @@ public class Emailer {
         SUCCESS("SUCCESS", true),
         FAIL("FAIL", false);
 
-        private String status;
-        private boolean sent;
+        private final String status;
+        private final boolean sent;
 
         private STATUS(String status, boolean sent) {
             this.status = status;
@@ -407,5 +416,6 @@ public class Emailer {
             return sent;
         }
     }
+
 
 }

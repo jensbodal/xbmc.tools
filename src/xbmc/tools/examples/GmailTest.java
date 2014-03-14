@@ -36,7 +36,7 @@ public class GmailTest {
         emailer.setFromAddress(username + "@gmail.com");
         emailer.setToAddress("example@mailinator.com");
         emailer.setMessageSubject("You sent an email!");
-        emailer.setMessageContext("This is the body of the email");
+        emailer.setMessageBody("This is the body of the email");
         
         emailer.sendEmail(USETLS, SMTP_SERVER, PORT, TEST_ALL_SMTP_SERVERS);
     }
