@@ -51,7 +51,7 @@ public class XBMCUpdate_MainTest {
         
     }
     
-    @Ignore
+    
     @Test
     public void testMainUtor() {
         System.out.println("Testing uTorrent implementation");

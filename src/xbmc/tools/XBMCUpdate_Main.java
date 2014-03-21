@@ -4,8 +4,10 @@
 package xbmc.tools;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.xml.stream.XMLStreamException;
 
 /**
  *
@@ -57,14 +59,28 @@ public class XBMCUpdate_Main {
                 String label = args[2];
                 String title = args[3];
                 DownloadLog log = new DownloadLog(label, title);
-                String toEmail = (LocalFile.getString("/sendto.txt"));
+                String toEmail = null; 
+                String password = null;
+                String userHome = System.getProperty("user.home");
+                ReadUsernameXML reader = null;
+                try {
+                    reader = new ReadUsernameXML(userHome + "/xbmcEmail.xml");
+                    reader.parseXML();
+                    EncryptText encrypter = new EncryptText();
+                    toEmail = encrypter.decryptString(reader.getUsername());
+                    password = encrypter.decryptString(reader.getPassword());
+                    
+                }
+                catch (FileNotFoundException | XMLStreamException e) {
+                    e.printStackTrace();
+                }
                 Emailer emailer = new Emailer();
+                emailer.setCredentials(toEmail, password);
                 String fromEmail = "utorrent@gmail.com";
                 emailer.setToAddress(toEmail);
                 emailer.setFromAddress(fromEmail);
                 emailer.setMessageSubject("New Torrent Downloaded");
                 emailer.setMessageBody(log.toString());
-                emailer.setCredentials();
                 emailer.sendEmail("true", "smtp.gmail.com", "587", false);
 
                 File logFile = new File(args[1]);

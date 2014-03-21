@@ -18,7 +18,7 @@ import org.junit.Test;
  *
  * @author jensb
  */
-@Ignore
+
 public class EmailerTest {
     String toEmail = "java@mailinator.com";
     String fromEmail = "billgates@live.com";
