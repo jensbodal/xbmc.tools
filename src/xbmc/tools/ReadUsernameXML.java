@@ -1,14 +1,30 @@
 package xbmc.tools;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.CipherOutputStream;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
-
 
 /**
  *
@@ -18,10 +34,8 @@ public class ReadUsernameXML {
 
     private final String USERNAME = "username";
     private final String PASSWORD = "password";
-    private final String XBMC = "xbmc";
-    private final String SECRET = "aosidfjaoij3213513088465035gsdfgsf3eoijefaoifj";
-    private final byte[] salt = XBMC.getBytes();
-    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    private final String SECRET_TEXT = "baamx2maeaacxbmc";
+   
     XMLInputFactory factory;
     FileInputStream stream;
     private File xmlFile;
@@ -31,11 +45,10 @@ public class ReadUsernameXML {
     private String password;
 
     public ReadUsernameXML(String filename) throws FileNotFoundException, XMLStreamException {
-        setXmlFile(new File("sample.xml"));
+        setXmlFile(new File(filename));
     }
 
-    public void parseXML() throws
-            FileNotFoundException, XMLStreamException {
+    public void parseXML() throws FileNotFoundException, XMLStreamException {
         factory = XMLInputFactory.newInstance();
         /**
          * return all characters as single event http://stackoverflow.com/questions/11880742/
@@ -54,7 +67,6 @@ public class ReadUsernameXML {
                 switch (startElement) {
                     case USERNAME:
                         setUsername(nextEvent.asCharacters().toString());
-                        DecryptString(getUsername());
                         break;
                     case PASSWORD:
                         setPassword(nextEvent.asCharacters().toString());
@@ -65,12 +77,6 @@ public class ReadUsernameXML {
             }
         }
     }
-
-    private void DecryptString(String string) {
- 
-    }
-
-
 
     /**
      * @return the username
@@ -113,4 +119,5 @@ public class ReadUsernameXML {
     private void setXmlFile(File xmlFile) {
         this.xmlFile = xmlFile;
     }
+
 }
