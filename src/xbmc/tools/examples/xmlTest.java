@@ -1,8 +1,9 @@
 package xbmc.tools.examples;
 
 import java.io.FileNotFoundException;
+import java.security.NoSuchAlgorithmException;
 import javax.xml.stream.XMLStreamException;
-import xbmc.tools.XMLReader;
+import xbmc.tools.ReadUsernameXML;
 
 /**
  *
@@ -10,7 +11,8 @@ import xbmc.tools.XMLReader;
  */
 public class xmlTest {
     public static void main(String[] args) throws FileNotFoundException, XMLStreamException {
-        XMLReader reader = new XMLReader(); 
-        
+        ReadUsernameXML reader = new ReadUsernameXML("sample.xml"); 
+      
+        System.out.println(reader.getUsername()+":"+reader.getPassword());
     }
 }
