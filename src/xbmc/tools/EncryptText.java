@@ -32,10 +32,10 @@ public class EncryptText {
     
     public EncryptText() {
         this(new byte[]
-            {1, 4, 3, 4, 10, 125, 64, 105, 13, 17, 10, 1, 7, 13, 0, 12});
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
     }
     
-    public EncryptText(byte[] iv) throws RuntimeException {
+    public EncryptText(byte[] iv) {
         try {
             SECRET = SECRET_TEXT.getBytes(ENCODING);
         }
@@ -58,9 +58,20 @@ public class EncryptText {
             encryptCipher.init(Cipher.ENCRYPT_MODE, key, ivspec);
             decryptCipher.init(Cipher.DECRYPT_MODE, key, ivspec);
         }
-        catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
-            //throw new RuntimeException(e);
+        catch (InvalidKeyException e) {
             throw new IllegalArgumentException(e);
+        }
+        catch (InvalidAlgorithmParameterException e) {
+            StringBuilder error = new StringBuilder();
+            error.append("iv: {");
+            for (byte b:initializationVector) {
+                error.append("\"");
+                error.append(b);
+                error.append("\",");
+            }
+            error.replace(error.length()-1, error.length(), "");
+            error.append("}");
+            throw new IllegalArgumentException(error.toString(), e);
         }
     }
     
