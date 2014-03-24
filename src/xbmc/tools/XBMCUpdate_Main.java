@@ -66,7 +66,9 @@ public class XBMCUpdate_Main {
                 try {
                     reader = new ReadUsernameXML(userHome + "/xbmcEmail.xml");
                     reader.parseXML();
-                    EncryptText encrypter = new EncryptText();
+                    byte iv[] = 
+                            new byte[] {1, 4, 3, 4, 10, 125, 64, 105, 13, 17, 10, 1, 7, 13, 0, 12};
+                    EncryptText encrypter = new EncryptText(iv);
                     toEmail = encrypter.decryptString(reader.getUsername());
                     password = encrypter.decryptString(reader.getPassword());
                     
