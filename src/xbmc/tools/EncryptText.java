@@ -1,6 +1,5 @@
 package xbmc.tools;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
@@ -36,12 +35,12 @@ public class EncryptText {
             {1, 4, 3, 4, 10, 125, 64, 105, 13, 17, 10, 1, 7, 13, 0, 12});
     }
     
-    public EncryptText(byte[] iv) {
+    public EncryptText(byte[] iv) throws RuntimeException {
         try {
             SECRET = SECRET_TEXT.getBytes(ENCODING);
         }
         catch (UnsupportedEncodingException e) {
-            throw new UnsupportedOperationException("ENCODING should be UTF-8"); 
+            throw new IllegalArgumentException(ENCODING, e);
         }
         key = new SecretKeySpec(SECRET, ALGORITHM);
         initializationVector = iv;
@@ -51,22 +50,17 @@ public class EncryptText {
             encryptCipher = Cipher.getInstance(CIPHERTYPE);
             decryptCipher = Cipher.getInstance(CIPHERTYPE);
         }
-        catch (NoSuchAlgorithmException e) {
-            System.out.println("CIPHERTYPE should be AES/CBC/PKCS5Padding");
-        }
-        catch (NoSuchPaddingException e) {
-            System.out.println("Padding in CIPHERTYPE should be PKCS5Padding");
+        catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+            throw new IllegalArgumentException(e);
         }
         
         try {
             encryptCipher.init(Cipher.ENCRYPT_MODE, key, ivspec);
             decryptCipher.init(Cipher.DECRYPT_MODE, key, ivspec);
         }
-        catch (InvalidKeyException e) {
-            System.out.println("key should be new SecretKeySpec(SECRET, ALGORITHM)");
-        }
-        catch (InvalidAlgorithmParameterException e) {
-            System.out.println("InvalidAlgorithmParameterException");
+        catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
+            //throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
     }
     
@@ -78,14 +72,8 @@ public class EncryptText {
             inputBytes = string.getBytes(ENCODING);
             encryptedData = encryptCipher.doFinal(inputBytes);
         }
-        catch (UnsupportedEncodingException e) {
-            throw new UnsupportedOperationException("UnsupportedEncodingException");
-        }
-        catch (IllegalBlockSizeException e) {
-            throw new UnsupportedOperationException("IllegalBlockSizeException");
-        }
-        catch (BadPaddingException e) {
-            throw new UnsupportedOperationException("BadPaddingException");
+        catch (UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException e) {
+            throw new IllegalArgumentException(e);
         }
         return String.valueOf(new BigInteger(encryptedData));
     }
@@ -96,11 +84,8 @@ public class EncryptText {
         try {
             decryptedData = decryptCipher.doFinal(value.toByteArray());
         }
-        catch (IllegalBlockSizeException e) {
-            throw new UnsupportedOperationException("IllegalBlockSizeException");
-        }
-        catch (BadPaddingException e) {
-            throw new UnsupportedOperationException("BadPaddingException");
+        catch (IllegalBlockSizeException | BadPaddingException e) {
+            throw new IllegalArgumentException(e);
         }
         return new String(decryptedData);        
     }

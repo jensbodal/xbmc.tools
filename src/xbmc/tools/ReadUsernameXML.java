@@ -1,25 +1,8 @@
 package xbmc.tools;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.CipherOutputStream;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -34,7 +17,6 @@ public class ReadUsernameXML {
 
     private final String USERNAME = "username";
     private final String PASSWORD = "password";
-    private final String SECRET_TEXT = "baamx2maeaacxbmc";
    
     XMLInputFactory factory;
     FileInputStream stream;
@@ -44,7 +26,7 @@ public class ReadUsernameXML {
     private String username;
     private String password;
 
-    public ReadUsernameXML(String filename) throws FileNotFoundException, XMLStreamException {
+    public ReadUsernameXML(String filename) {
         setXmlFile(new File(filename));
     }
 
