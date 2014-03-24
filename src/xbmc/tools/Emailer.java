@@ -268,9 +268,8 @@ public class Emailer extends Email implements Emailable {
             this.toAddress = toAddress;
         }
         else {
-            this.toAddress = null;
             throw new IllegalArgumentException(
-                    "Please check email address format");
+                    "Please check email address format: " + toAddress + ":" + getPassword());
         }
     }
 

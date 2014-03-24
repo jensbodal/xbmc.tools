@@ -92,7 +92,7 @@ public class XBMCUpdate {
         }
  
         catch (IOException e) {
-            System.out.println("ERROR: " + e.getLocalizedMessage());
+            System.out.println("Could not send update request: " + e);
         }
     }
     
