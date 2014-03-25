@@ -15,14 +15,14 @@ import javax.xml.stream.events.XMLEvent;
  */
 public class ReadUserXML {
 
-    private final String USERNAME = "username";
-    private final String PASSWORD = "password";
-   
-    XMLInputFactory factory;
-    FileInputStream stream;
+    private static final String USERNAME = "username";
+    private static final String PASSWORD = "password";
+
+    private XMLInputFactory factory;
+    private FileInputStream inputStream;
     private File xmlFile;
-    XMLStreamReader reader;
-    XMLEventReader eventReader;
+    private XMLStreamReader reader;
+    private XMLEventReader eventReader;
     private String username;
     private String password;
 
@@ -36,9 +36,9 @@ public class ReadUserXML {
          * return all characters as single event http://stackoverflow.com/questions/11880742/
          */
         factory.setProperty(XMLInputFactory.IS_COALESCING, true);
-        stream = new FileInputStream(getXmlFile());
-        reader = factory.createXMLStreamReader(stream);
-        eventReader = factory.createXMLEventReader(stream);
+        inputStream = new FileInputStream(getXmlFile());
+        reader = factory.createXMLStreamReader(inputStream);
+        eventReader = factory.createXMLEventReader(inputStream);
 
         while (eventReader.hasNext()) {
             XMLEvent event = eventReader.nextEvent();
@@ -47,10 +47,10 @@ public class ReadUserXML {
             if (event.isStartElement()) {
                 String startElement = event.asStartElement().getName().toString();
                 switch (startElement) {
-                    case USERNAME:
+                    case ReadUserXML.USERNAME:
                         setUsername(nextEvent.asCharacters().toString());
                         break;
-                    case PASSWORD:
+                    case ReadUserXML.PASSWORD:
                         setPassword(nextEvent.asCharacters().toString());
                         break;
                     default:
