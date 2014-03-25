@@ -20,15 +20,6 @@ public class XBMCUpdate_Main {
      * @param args
      */
     public static void main(String[] args) throws IOException {
-        File testFile = new File("C:/users/jensbodal/fuck.txt");
-        try (FileWriter writer = new FileWriter(testFile)) {
-            writer.write("Report: ");
-//            writer.write(args[0] + " " );
-//            writer.write(args[1] + " " );
-//            writer.write(args[2] + " " );
-//            writer.write(args[3] + " " );
-//            writer.write(args[4] + " " );
-        }
         if (args.length > 0) {
             switch (args[0]) {
                 case "-update":
