@@ -3,8 +3,6 @@
  */
 package xbmc.tools;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -17,8 +15,10 @@ import javax.xml.stream.XMLStreamException;
  * @author Jens Bodal
  */
 public class XBMCUpdate_Main {
+
     private static final String USERHOME = System.getProperty("user.home");
     private static final String USER_XML_PATH = USERHOME + "/xbmcEmail.xml";
+
     /**
      *
      * @param args
@@ -87,30 +87,30 @@ public class XBMCUpdate_Main {
         invalidParams.append("\"8080\" ");
         System.out.println(invalidParams.toString());
     }
-    
+
     private static void createXML() {
         Scanner input = new Scanner(System.in);
         String secret;
         String username;
         String password;
-        
+
         System.out.println("Secret must be exactly 16 characters long.");
         System.out.println("The secret will be used to encrypt your email & password");
         System.out.println();
         System.out.print("Enter secret: ");
         secret = input.next();
-        
+
         EncryptText encrypter = new EncryptText(secret);
-        
+
         System.out.print("Enter email address: ");
         username = input.next();
         System.out.print("Enter password: ");
         password = input.next();
         System.out.println();
-        
+
         username = encrypter.encryptString(username);
         password = encrypter.encryptString(password);
-        
+
         WriteUserXML writer = new WriteUserXML(USER_XML_PATH);
         try {
             writer.WriteUserInfo(username, password);
@@ -118,7 +118,7 @@ public class XBMCUpdate_Main {
         catch (FileNotFoundException | XMLStreamException e) {
             throw new IllegalArgumentException(e);
         }
-        
+
     }
 
     private static void updateFromUtorrent(
@@ -133,7 +133,7 @@ public class XBMCUpdate_Main {
         DownloadLog log = new DownloadLog(label, title);
         String toEmail = null;
         String password = null;
-        
+
         ReadUserXML reader;
         try {
             reader = new ReadUserXML(USER_XML_PATH);
