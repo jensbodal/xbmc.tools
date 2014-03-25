@@ -19,7 +19,7 @@ public class XBMCUpdate_Main {
      *
      * @param args
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         if (args.length > 0) {
             switch (args[0]) {
                 case "-update":
