@@ -48,7 +48,9 @@ public class Emailer extends Email implements Emailable {
     /**
      * Grabs the username and password from text files stored in the user's home
      * directory
+     * @deprecated use ReadUserXML class instead
      */
+    @Deprecated
     public void setCredentials() {
         setPassword(LocalFile.getString("/gmailpassword.txt"));
         setUsername(LocalFile.getString("/gmailusername.txt"));
@@ -88,7 +90,7 @@ public class Emailer extends Email implements Emailable {
      * <b>NOTE</b> this will likely not work if you don't have a business class
      * ISP. Most ISPs disable sending unauthenticated email on port 25
      *
-     * @return authenticator object if no authenticaion desired
+     * @return authenticator object if no authentication desired
      */
     public Authenticator disableAuthentication() {
         return new Authenticator() {

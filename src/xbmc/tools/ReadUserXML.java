@@ -13,7 +13,7 @@ import javax.xml.stream.events.XMLEvent;
  *
  * @author jensb
  */
-public class ReadUsernameXML {
+public class ReadUserXML {
 
     private final String USERNAME = "username";
     private final String PASSWORD = "password";
@@ -26,7 +26,7 @@ public class ReadUsernameXML {
     private String username;
     private String password;
 
-    public ReadUsernameXML(String filename) {
+    public ReadUserXML(String filename) {
         setXmlFile(new File(filename));
     }
 

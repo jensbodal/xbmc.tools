@@ -92,9 +92,9 @@ public class XBMCUpdate_Main {
         String toEmail = null;
         String password = null;
         String userHome = System.getProperty("user.home");
-        ReadUsernameXML reader;
+        ReadUserXML reader;
         try {
-            reader = new ReadUsernameXML(userHome + "/xbmcEmail.xml");
+            reader = new ReadUserXML(userHome + "/xbmcEmail.xml");
             reader.parseXML();
             EncryptText encrypter = new EncryptText(secret);
             toEmail = encrypter.decryptString(reader.getUsername());
