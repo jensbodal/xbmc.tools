@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
  * @author jensb
  */
 public class TestLogging {
-    private static final Logger LOGGER = LogManager.getLogger("GLOBAL");
+    private static final Logger LOGGER = LogManager.getLogger(GmailTest.class.getName());
     
     public static void main(String[] args) {
         
