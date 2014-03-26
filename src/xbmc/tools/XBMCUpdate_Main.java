@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import javax.xml.stream.XMLStreamException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -18,7 +20,8 @@ public class XBMCUpdate_Main {
 
     private static final String USERHOME = System.getProperty("user.home");
     private static final String USER_XML_PATH = USERHOME + "/xbmcEmail.xml";
-
+    private static final Logger logger = LogManager.getLogger("GLOBAL");
+    
     /**
      *
      * @param args
@@ -40,6 +43,8 @@ public class XBMCUpdate_Main {
                     }
                     else {
                         System.out.println("Invalid number of arguments: " + args.length);
+                        System.out.println("Command should have the format of "
+                                + "-utor logfile lable filname secret");
                     }
                     break;
                 case "-encrypt":
@@ -58,7 +63,7 @@ public class XBMCUpdate_Main {
                     }
                     break;
                 default:
-                    System.out.println("Command must begin with -update or -utor");
+                    System.out.println("Command must begin with -update, -utor, or -createXML");
                     break;
             }
         }
@@ -116,7 +121,7 @@ public class XBMCUpdate_Main {
             writer.WriteUserInfo(username, password);
         }
         catch (FileNotFoundException | XMLStreamException e) {
-            throw new IllegalArgumentException(e);
+            logger.error(e);
         }
 
     }
@@ -144,7 +149,7 @@ public class XBMCUpdate_Main {
 
         }
         catch (FileNotFoundException | XMLStreamException e) {
-            throw new RuntimeException(e);
+            logger.error(e);
         }
         Emailer emailer = new Emailer();
         emailer.setCredentials(toEmail, password);
@@ -163,11 +168,13 @@ public class XBMCUpdate_Main {
                 System.out.println("Added to log: \n\t" + log.toString());
             }
             catch (IOException e) {
-                System.out.println(e);
+                logger.info("logFilePath invalid");
+                
+                logger.error("Could not find log file", e);
             }
         }
         else {
-            System.out.printf("Directory %s does not exist", logFile.getAbsolutePath());
+            System.out.printf("Directory %s does not exist%n", logFile.getAbsolutePath());
         }
     }
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Properties>
+    <Property name="filename">logs/testlog</Property>
+  </Properties>
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </Console>
+	<RollingFile name="File" filename="${filename}.log" filepattern="${filename}-%i.log">
+	  <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+	  <OnStartupTriggeringPolicy/>
+	  <DefaultRolloverStrategy max="2" />
+	</RollingFile>
+  </Appenders>
+  <Loggers>
+    <Root level="trace">
+      <AppenderRef ref="File"/>
+    </Root>
+    <Root level="debug">
+      <AppenderRef ref="File"/>
+    </Root>
+    <Root level="info">
+      <AppenderRef ref="Console"/>
+    </Root>
+    <Root level="warn">
+      <AppenderRef ref="File"/>
+    </Root>
+	<Root level="error">
+	  <AppenderRef ref="File"/>
+	</Root>
+    <Root level="fatal">
+      <AppenderRef ref="File"/>
+	  <AppenderRef ref="Console"/>
+    </Root>
+  </Loggers>
+</Configuration>

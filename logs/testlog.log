@@ -1,0 +1,5 @@
+19:52:39.008 [main] FATAL GLOBAL - tracing
+19:52:39.011 [main] FATAL GLOBAL - java.lang.RuntimeException: OMG RUNTIME ERROR
+java.lang.RuntimeException: OMG RUNTIME ERROR
+	at xbmc.tools.examples.TestLogging.test(TestLogging.java:26) [classes/:?]
+	at xbmc.tools.examples.TestLogging.main(TestLogging.java:20) [classes/:?]
