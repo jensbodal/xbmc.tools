@@ -129,11 +129,8 @@ public class XBMCUpdate_Main {
     private static void updateFromUtorrent(
             String logFilePath, String label, String title, String secret) {
         XBMCUpdate updateXios
-                = new XBMCUpdate("xbmc", "xbmc", "10.0.0.151", "8080");
-        XBMCUpdate updateJens
-                = new XBMCUpdate("xbmc", "xbmc", "127.0.0.1", "8082");
+                = new XBMCUpdate("xbmc", "xbmc", "10.0.0.170", "8080");
         updateXios.sendUpdateRequest();
-        updateJens.sendUpdateRequest();
 
         DownloadLog log = new DownloadLog(label, title);
         String toEmail = null;
