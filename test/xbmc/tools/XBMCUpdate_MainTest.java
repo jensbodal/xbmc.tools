@@ -39,23 +39,11 @@ public class XBMCUpdate_MainTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of main method, of class XBMCUpdate_Main.
-     */
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void testMain0() {
-        System.out.println("main");
-        String[] args = {"-utor"};
-        XBMCUpdate_Main.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        
-    }
-    
-    
+   
     @Test
     public void testMainUtor() {
         System.out.println("Testing uTorrent implementation");
-        String[] args = {"-utor", "logfile", "label", "filename"};
+        String[] args = {"-utor", "logfile", "label", "filename", "Apples00Apples00"};
         XBMCUpdate_Main.main(args);
         // TODO review the generated test code and remove the default call to fail.
         

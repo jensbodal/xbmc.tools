@@ -129,7 +129,7 @@ public class XBMCUpdate_Main {
     private static void updateFromUtorrent(
             String logFilePath, String label, String title, String secret) {
         XBMCUpdate updateServer
-                = new XBMCUpdate("xbmc", "xbmc", "10.0.0.170", "8081");
+                = new XBMCUpdate("xbmc", "xbmc", "10.0.0.5", "8081");
         updateServer.sendUpdateRequest();
 
         DownloadLog log = new DownloadLog(label, title);
